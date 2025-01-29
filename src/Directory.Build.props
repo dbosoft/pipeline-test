@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://dbosoft.eu</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/dbosoft/pipeline-test/releases</PackageReleaseNotes>
+    <Authors>dbosoft GmbH</Authors>
+    <Company>dbosoft GmbH</Company>
+    <Product>PipelineTest</Product>
+    <Copyright>dbosoft GmbH. All rights reserved.</Copyright>
+    <RepositoryUrl>https://github.com/dbosoft/pipeline-test</RepositoryUrl>
+    <!-- Declare that the Repository URL can be published to NuSpec -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Embed source files that are not tracked by the source control manager to the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- Include PDB in the built .nupkg -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="6.0.5">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
