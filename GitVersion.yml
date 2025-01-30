@@ -5,3 +5,5 @@ branches:
     increment: Patch
     prevent-increment:
       when-current-commit-tagged: true
+  support:
+    is-main-branch: false
