@@ -13,4 +13,9 @@ public interface IGreeter
     /// Returns a normal greeting using the given <paramref name="name"/>.
     /// </summary>
     public string Greet(string name);
+
+    /// <summary>
+    /// Returns a greeting in French using the given <paramref name="name"/>.
+    /// </summary>
+    public string GreetInFrench(string name);
 }
