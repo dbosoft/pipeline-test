@@ -24,8 +24,11 @@ jobs:
   
   - task: gitversion/execute@3.1.11
     displayName: Run GitVersion
+
+  - task: gitversion/command@3.1.11
+    displayName: Display GitVersion diag
     inputs:
-      useConfigFile: true
+      arguments: '/diag'
 
   - task: DotNetCoreCLI@2
     displayName: dotnet restore
