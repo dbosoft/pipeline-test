@@ -1,0 +1,73 @@
+trigger:
+- main
+- refs/tags/v*
+- support/*
+
+jobs:
+- job: Build
+  pool:
+    vmImage: windows-latest  
+
+  variables:
+    buildConfiguration: 'Release'
+
+  steps:
+  
+  - checkout: self
+    fetchDepth: 0
+  
+  - task: gitversion/setup@3.1.11
+    displayName: Install GitVersion
+    inputs:
+      # Pin exact version as recommended here: https://github.com/GitTools/actions/issues/1378#issuecomment-2529574799
+      versionSpec: '6.0.5'
+  
+  - task: gitversion/execute@3.1.11
+    displayName: Run GitVersion
+    inputs:
+      useConfigFile: true
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet restore
+    inputs:
+      command: 'restore'
+      restoreArguments: '--disable-parallel'
+      feedsToUse: 'config'
+      nugetConfigPath: './nuget.config'
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet build
+    inputs:
+      command: build
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration) --no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet test
+    inputs:
+      command: test
+      projects: '**/*Tests/*.csproj'
+      arguments: '--configuration $(buildConfiguration) --no-build'
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet pack
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/*.csproj'
+      packDirectory: '$(Build.ArtifactStagingDirectory)\packages'
+      versioningScheme: 'off'
+
+  - task: PublishBuildArtifacts@1
+    displayName: publish nuget artifacts
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)\packages'
+      ArtifactName: 'packages'
+      publishLocation: 'Container'
+
+  - task: NuGetCommand@2
+    displayName: publish to project nuget repo
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '59a3608a-9bed-4cb4-9467-6efaaa3cbef5/1e425ef4-e3a0-4927-b4c0-2beff753cb88'   
