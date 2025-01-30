@@ -1,6 +1,7 @@
 trigger:
 - main
 - refs/tags/v*
+- release/*
 - support/*
 
 jobs:
