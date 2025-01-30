@@ -14,4 +14,10 @@ public class Greeter : IGreeter
     {
         return $"Hello, {name}!";
     }
+
+    /// <inheritdoc />
+    public string GreetInFrench(string name)
+    {
+        return $"Bonjour, {name}!";
+    }
 }
