@@ -1,0 +1,7 @@
+<Project>
+  <Target Name="DbosoftPackageVersion" DependsOnTargets="GetVersion" BeforeTargets="$(GitVersionTargetsBefore)">
+    <PropertyGroup Condition=" '$(UpdateVersionProperties)' == 'true' ">
+      <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'true' ">$(GitVersion_FullSemVer.Replace('+','-ci.'))</PackageVersion>
+    </PropertyGroup>
+  </Target>
+</Project>
