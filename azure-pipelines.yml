@@ -4,6 +4,9 @@ trigger:
 - release/*
 - support/*
 
+variables:
+  GIT_BRANCH: ${{ iif(startsWith(variables['Build.SourceBranch'], 'refs/tags'), '', variables['Build.SourceBranch']) }}
+
 jobs:
 - job: Build
   pool:
