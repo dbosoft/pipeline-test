@@ -1,7 +1,15 @@
 <Project>
+  <!-- Update the package version for beta releases such that the
+       CI builds receive unique prereleae labels.
+  -->
   <Target Name="DbosoftPackageVersion" DependsOnTargets="GetVersion" BeforeTargets="$(GitVersionTargetsBefore)">
     <PropertyGroup Condition=" '$(UpdateVersionProperties)' == 'true' ">
-      <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'true' ">$(GitVersion_FullSemVer.Replace('+','-ci.'))</PackageVersion>
+      <PackageVersion Condition=" '$(UseFullSemVerForNuGet)' == 'true' ">
+        $([System.Text.RegularExpressions.Regex]::Replace(
+          $(GitVersion_FullSemVer),
+          '^([vV]?\d+\.\d+\.\d+)(-beta\.)(\d+)\+(\d+)',
+          '$1-0beta.$3.$4'))
+      </PackageVersion>
     </PropertyGroup>
   </Target>
 </Project>

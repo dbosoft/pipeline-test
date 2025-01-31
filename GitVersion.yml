@@ -1,4 +1,8 @@
+# Use GitFlow to get access to support branches
 workflow: GitFlow/v1
+# Microsoft recommends to only change the major version of assemblies
+# to reduce the amount of assembly redirect. Use MajorMinor until
+# 1.0.0 is released (as 0.x.z to 0.y.0 might contain breaking changes).
 assembly-versioning-scheme: MajorMinor
 branches:
   release:

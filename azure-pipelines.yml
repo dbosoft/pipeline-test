@@ -5,7 +5,10 @@ trigger:
 - support/*
 
 variables:
-  GIT_BRANCH: ${{ iif(startsWith(variables['Build.SourceBranch'], 'refs/tags'), '', variables['Build.SourceBranch']) }}
+  # The Azure Pipelines integration of GitVersion normalizes tag names
+  # incorrectly. Hence, we override it here.
+  # See https://github.com/GitTools/GitVersion/pull/4400
+  GIT_BRANCH: ${{ iif(startsWith(variables['Build.SourceBranch'], 'refs/tags/'), '', variables['Build.SourceBranch']) }}
 
 jobs:
 - job: Build
