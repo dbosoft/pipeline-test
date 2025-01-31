@@ -21,6 +21,12 @@ jobs:
   - checkout: self
     fetchDepth: 0
   
+  - task: PowerShell@2
+    displayName: List environment variables
+    inputs:
+      targetType: 'inline'
+      script: 'Get-ChildItem Env: | ForEach-Object { Write-Output "$($_.Name)=$($_.Value)" }'
+
   - task: gitversion/setup@3.1.11
     displayName: Install GitVersion
     inputs:
