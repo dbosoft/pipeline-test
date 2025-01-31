@@ -7,6 +7,8 @@ trigger:
   tags:
     include:
     - v*
+variables:
+  GIT_BRANCH: ${{ iff(startsWith(variables['Build.SourceBranch'], 'refs/tags'),'', variables['Build.SourceBranch']) }}
 
 jobs:
 - job: Build
